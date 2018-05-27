@@ -1,0 +1,12 @@
+type Demo {
+  _id: String
+  text: String
+}
+
+extend type Query {
+  demo: String
+}
+
+extend type Mutation {
+  demoMutation(text: String!): Demo
+}
