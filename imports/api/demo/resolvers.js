@@ -1,7 +1,10 @@
 export default {
   Query: {
     demo: () => {
-      return "Hello world"
+      return {
+        _id: -1, 
+        text: "Hello world"
+      }
     }
   },
   Mutation: {

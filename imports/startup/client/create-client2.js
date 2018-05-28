@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor'
 import { ApolloClient } from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { HttpLink } from 'apollo-link-http'
@@ -16,7 +17,7 @@ const client = new ApolloClient({
       if (networkError) console.log(`[Network error]: ${networkError}`)
     }),
     new HttpLink({
-      uri: Meteor.absoluteUrl("graphql"), // eslint-disable-line
+      uri: Meteor.absoluteUrl("graphql"), 
       credentials: 'same-origin'
     })
   ]),

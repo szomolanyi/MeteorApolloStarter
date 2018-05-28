@@ -4,7 +4,14 @@ import gql from "graphql-tag"
 
 const hello_query = gql`
   {
-    demo
+    demo {
+      _id
+      text
+    }
+    user {
+      _id
+      email
+    }
   }
 `
 
@@ -12,10 +19,12 @@ const FrontPage = () => {
   return (
     <Query query={hello_query}>
       {({loading, error, data}) => { //eslint-disable-line
+        console.log(data)
+        //console.log(`User: ${data.user._id}`)
         return (
           <div>
             <h1>FrontPage</h1>
-            <h2>{data.demo}</h2>
+            <h2>{data.demo.text}</h2>
           </div>
         )
       }}

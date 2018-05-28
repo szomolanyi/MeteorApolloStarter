@@ -9,25 +9,37 @@ import { ApolloProvider } from "react-apollo"
 import { getDataFromTree} from "react-apollo"
 import { ApolloClient } from "apollo-client"
 import { InMemoryCache } from "apollo-cache-inmemory"
-import { SchemaLink } from "apollo-link-schema"
+import { createHttpLink } from "apollo-link-http"
+import { from } from "apollo-link"
 
-//import "isomorphic-fetch"
+import "isomorphic-fetch"
 
-import schema from "../../api/schema"
 import App from "../../ui/App"
 
 onPageLoad(async sink => { 
-
+/*
+  const authLink = new ApolloLink((operation, forward) => {
+    operation.setContext(() => ({
+      headers: {
+        'meteor-login-token': sink.getCookies()["meteor-login-token"],
+      }
+    }))
+    return forward(operation)
+  })
+*/
   const client = new ApolloClient({
     ssrMode: true,
-    link: new SchemaLink({ schema }),
-    /*link: createHttpLink({
-      uri: 'http://localhost:3010',
-      credentials: 'same-origin',
-      headers: {
-        cookie: sink.request.headers.cookie,
-      },
-    }),*/
+    link: from([
+      //authLink,
+      //new SchemaLink({ schema }),
+      createHttpLink({
+        uri: 'http://localhost:3000/graphql',
+        credentials: 'same-origin',
+        headers: {
+          cookie: sink.request.headers.cookie,
+        },
+      }),
+    ]),
     cache: new InMemoryCache(),
   })
 

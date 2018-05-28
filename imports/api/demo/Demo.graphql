@@ -4,7 +4,7 @@ type Demo {
 }
 
 extend type Query {
-  demo: String
+  demo: Demo
 }
 
 extend type Mutation {
