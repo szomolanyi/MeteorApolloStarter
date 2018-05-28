@@ -1,3 +1,4 @@
+import {Meteor} from "meteor/meteor"
 import React from "react"
 import { renderToString } from "react-dom/server"
 import { onPageLoad } from "meteor/server-render"
@@ -33,7 +34,7 @@ onPageLoad(async sink => {
       //authLink,
       //new SchemaLink({ schema }),
       createHttpLink({
-        uri: 'http://localhost:3000/graphql',
+        uri: Meteor.absoluteUrl("graphql"),
         credentials: 'same-origin',
         headers: {
           cookie: sink.request.headers.cookie,
