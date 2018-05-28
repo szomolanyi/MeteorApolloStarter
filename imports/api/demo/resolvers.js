@@ -1,11 +1,11 @@
 export default {
   Query: {
-    demo: (obj, params, context) => {
+    demo: () => {
       return "Hello world"
     }
   },
   Mutation: {
-    demoMutation: (obj, { text }, context) => {
+    demoMutation: (obj, { text }) => {
       return {
         _id: -1,
         text

@@ -11,7 +11,7 @@ const hello_query = gql`
 const FrontPage = () => {
   return (
     <Query query={hello_query}>
-      {({loading, error, data}) => {
+      {({loading, error, data}) => { //eslint-disable-line
         return (
           <div>
             <h1>FrontPage</h1>

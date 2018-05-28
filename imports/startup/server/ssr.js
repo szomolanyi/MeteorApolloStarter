@@ -3,16 +3,12 @@ import { renderToString } from "react-dom/server"
 import { onPageLoad } from "meteor/server-render"
 import { StaticRouter } from "react-router"
 
-import { object } from "prop-types"
 import { Helmet } from "react-helmet"
 
-import { graphql } from "graphql"
 import { ApolloProvider } from "react-apollo"
 import { getDataFromTree} from "react-apollo"
 import { ApolloClient } from "apollo-client"
-import { createHttpLink } from "apollo-link-http"
 import { InMemoryCache } from "apollo-cache-inmemory"
-import { renderToStringWithData } from "react-apollo"
 import { SchemaLink } from "apollo-link-schema"
 
 //import "isomorphic-fetch"
@@ -33,7 +29,7 @@ onPageLoad(async sink => {
       },
     }),*/
     cache: new InMemoryCache(),
-  });
+  })
 
   const context = {}
   const Main = () => (
@@ -46,7 +42,6 @@ onPageLoad(async sink => {
 
   await getDataFromTree(<Main />)
   const state = client.extract()
-  console.log(client.extract())
   sink.renderIntoElementById('app', renderToString(<Main />))
 
   const helmet = Helmet.renderStatic()

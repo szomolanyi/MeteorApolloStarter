@@ -14,7 +14,8 @@
             "experimentalObjectRestSpread": true,
             "jsx": true
         },
-        "sourceType": "module"
+        "sourceType": "module",
+        "ecmaVersion": 2017
     },
     "plugins": [
         "react"
@@ -28,13 +29,17 @@
             "error",
             "windows"
         ],
-        "quotes": [
-            "error",
-            "double"
-        ],
+        "quotes": "off",
+        "no-console": "off",
         "semi": [
             "error",
             "never"
         ]
-    }
+    },
+    "overrides": [
+        {   
+            "files": ["*.js", "*.jsx", "*.html", "*.json"],
+            "excludedFiles": "node_modules/*"
+        }
+    ]
 }

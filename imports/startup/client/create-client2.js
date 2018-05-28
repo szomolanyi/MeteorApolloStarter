@@ -16,7 +16,7 @@ const client = new ApolloClient({
       if (networkError) console.log(`[Network error]: ${networkError}`)
     }),
     new HttpLink({
-      uri: Meteor.absoluteUrl("graphql"),
+      uri: Meteor.absoluteUrl("graphql"), // eslint-disable-line
       credentials: 'same-origin'
     })
   ]),
