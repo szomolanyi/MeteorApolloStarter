@@ -1,0 +1,12 @@
+type Greeting {
+  _id: String
+  text: String
+}
+
+extend type Query {
+  greetings: [Greeting]
+}
+
+extend type Mutation {
+  createGreeting(text: String!): Greeting
+}
