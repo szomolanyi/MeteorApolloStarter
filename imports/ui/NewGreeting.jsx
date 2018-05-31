@@ -17,7 +17,6 @@ class NewGreetingForm extends Component {
   }
 
   submitGreeting = () => {
-    console.log(this.greeting.value)
     this.props.createGreeting({
       variables: {
         text: this.greeting.value

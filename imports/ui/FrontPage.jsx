@@ -26,9 +26,6 @@ const FrontPage = () => {
   return (
     <Query query={hello_query}>
       {({loading, error, client, data}) => { //eslint-disable-line
-        
-        console.log(data)
-        //console.log(`User: ${data.user._id}`)
         return (
           <div>
             <UserForm client={client} user={data.user} />

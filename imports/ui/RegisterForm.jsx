@@ -5,7 +5,6 @@ export default class RegisterForm extends Component {
 
   registerUser = (e) => {
     e.preventDefault()
-    console.log(this)
     Accounts.createUser({
       email: this.email.value,
       password: this.password.value

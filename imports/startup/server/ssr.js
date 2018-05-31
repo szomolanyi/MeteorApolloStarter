@@ -1,4 +1,3 @@
-import {Meteor} from "meteor/meteor"
 import React from "react"
 import { renderToString } from "react-dom/server"
 import { onPageLoad } from "meteor/server-render"
@@ -6,44 +5,38 @@ import { StaticRouter } from "react-router"
 
 import { Helmet } from "react-helmet"
 
-import { ApolloProvider } from "react-apollo"
-import { getDataFromTree} from "react-apollo"
+import { ApolloProvider, getDataFromTree } from "react-apollo"
 import { ApolloClient } from "apollo-client"
 import { InMemoryCache } from "apollo-cache-inmemory"
-import { createHttpLink } from "apollo-link-http"
+//import { createHttpLink } from "apollo-link-http"
 import { from } from "apollo-link"
-import { ApolloLink } from 'apollo-link'
+import { getUserForContext } from 'meteor/apollo'
 
-import "isomorphic-fetch"
+import schema from '../../api/schema'
+import {SchemaLink} from 'apollo-link-schema'
 
 import App from "../../ui/App"
 
 onPageLoad(async sink => { 
 
-  const authLink = new ApolloLink((operation, forward) => {
-    operation.setContext(() => ({
-      headers: {
-        'meteor-login-token': "jS_JuDjZ6s7K5pRkhOc0urIhBe0r--HfIn3NxBLe4ZU"//sink.getCookies()["meteor-login-token"],
-        //toto funguje,ale token je ulozeny v store na klientovi, otazka ako ho vytiahnut na serever
-      }
-    }))
-    return forward(operation)
-  })
+  const { loginToken } = sink.getCookies()
+  const { user } = await getUserForContext(loginToken)
 
-  console.log(`ssr token: ${sink.request.headers.cookie}`)
-  console.log(sink)
   const client = new ApolloClient({
     ssrMode: true,
     link: from([
-      //authLink,
-      //new SchemaLink({ schema }),
+      new SchemaLink({ 
+        schema, 
+        context: { user, userId: user ? user._id : undefined },
+      }),
+      /* if Graphql is remote, access is possible through apollo-link-http
       createHttpLink({
         uri: Meteor.absoluteUrl("graphql"),
         credentials: 'same-origin',
         headers: {
-          'meteor-login-token': "jS_JuDjZ6s7K5pRkhOc0urIhBe0r--HfIn3NxBLe4ZU"//sink.request.headers.cookie,
-        }, //aj toto funguje (authLink netreba ... otazka ako ho vytiahnut na serever)
-      }),
+          'meteor-login-token': loginToken
+        }, 
+      }),*/
     ]),
     cache: new InMemoryCache(),
   })
@@ -69,13 +62,4 @@ onPageLoad(async sink => {
       __html: `window.__APOLLO_STATE__ = ${JSON.stringify(state).replace(/</g, '\\u003c')};`,
     }} />
   ))
-  /*
-  sink.appendToBody(`
-    <script dangerouslySetInnerHTML={{
-          __html: `window.__APOLLO_STATE__ = ${ JSON.stringify(state).replace(/</g, '\\u003c') };`,
-        }} />
-    <script>
-      window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
-    </script>
-  `);*/
 })
