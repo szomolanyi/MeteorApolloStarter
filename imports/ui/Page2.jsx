@@ -1,5 +1,7 @@
 import React from "react"
 
+import { withUser } from '/imports/hocs'
+
 const Page2 = () => {
   return (
     <div>
@@ -8,4 +10,4 @@ const Page2 = () => {
   )
 }
 
-export default Page2
+export default withUser(Page2)

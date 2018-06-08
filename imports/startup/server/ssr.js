@@ -22,6 +22,8 @@ onPageLoad(async sink => {
   const { loginToken } = sink.getCookies()
   const { user } = await getUserForContext(loginToken)
 
+  console.log(`SSR: loginToken=${loginToken}`)
+
   const client = new ApolloClient({
     ssrMode: true,
     link: from([

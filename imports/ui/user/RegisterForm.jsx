@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Accounts } from 'meteor/accounts-base'
+import { withApollo } from 'react-apollo';
 
-export default class RegisterForm extends Component {
+class RegisterForm extends Component {
 
   registerUser = (e) => {
     e.preventDefault()
@@ -11,9 +12,13 @@ export default class RegisterForm extends Component {
     },
       (error => {
         if (!error) {
-          this.props.client.resetStore()
+          this.props.client.resetStore().then(()=>{
+            this.props.history.push("/")
+          })
         }
-        console.log(error)
+        else {
+          console.log(error)
+        }
       })
     )
   }
@@ -34,3 +39,5 @@ export default class RegisterForm extends Component {
     )
   }
 }
+
+export default withApollo(RegisterForm)

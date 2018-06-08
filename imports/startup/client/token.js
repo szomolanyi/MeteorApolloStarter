@@ -5,6 +5,7 @@ Accounts.onLogin(() => {
   const token = Accounts._storedLoginToken()
   const expires = Accounts._storedLoginTokenExpires()
 
+  console.log(`onLogin: token=${token}`)
   if (token) {
     const expireDate = new Date(expires)
     const today = new Date()
@@ -16,7 +17,3 @@ Accounts.onLogin(() => {
   }
 })
 
-Accounts.onLogout(() => {
-  Cookie.remove('loginToken')
-  window.location = '/'
-})
