@@ -32,10 +32,8 @@ class LoginForm extends Component {
     Meteor.loginWithPassword(
       this.email.value,
       this.password.value,
-      ((error, result) => {
-        console.log(result)
+      ((error) => {
         if (!error) {
-          console.log(this.props)
           this.props.client.resetStore().then(()=>{
             setToken()
             this.setState({ redirectToReferrer: true });

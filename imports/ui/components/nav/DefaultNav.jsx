@@ -6,6 +6,8 @@ import { withUser } from '/imports/hocs'
 
 import LogoutButton from '/imports/ui/user/LogoutButton'
 
+import routes from '/imports/routes'
+
 const style={
   display: "flex",
   justifyContent: "space-between"
@@ -29,19 +31,26 @@ const LoggedUser = ({user}) => (
   <LogoutButton />
 )
 
-const NotLogged = () => (
+const LinkGroup = ({keys}) => (
   <div>
-    <Link to="/register" style={linkStyle}>Register</Link>
-    <Link to="/login" style={linkStyle}>Login</Link>
+    {
+      keys.map(key => (
+        <Link key={key} to={routes[key].link.to} style={linkStyle}>
+          {routes[key].link.text}
+        </Link>
+      ))
+    }
   </div>
+)
+
+const NotLogged = () => (
+  <LinkGroup keys={["register", "login"]} />
 )
 
 const DefaultNav = ({user}) => (
   <nav style={style}>
     <div style={leftNav}>
-      <Link to="/" style={linkStyle}>Home</Link>
-      <Link to="/greetings" style={linkStyle}>Greetings</Link>
-      <Link to="/page2" style={linkStyle}>Page2</Link>
+      <LinkGroup keys={["home", "greetings", "page2"]} />
     </div>
     <div style={rightNav}>
       {
