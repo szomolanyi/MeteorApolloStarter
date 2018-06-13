@@ -1,22 +1,14 @@
 import React from 'react'
 
-import gql from 'graphql-tag'
 import {Query} from 'react-apollo'
 
 import { withUserProtected } from '/imports/hocs'
 import NewGreeting from "./NewGreeting"
 
-const greetings_query = gql`
-query greetings  {
-    greetings {
-      _id
-      text
-    }
-  }
-`
+import { getGreetings } from '/imports/queries'
 
 const GreetingsPage = () => (
-  <Query query={greetings_query} >
+  <Query query={getGreetings} >
     {({ loading, error, client, data }) => {
       if (loading) return null
       if (error) {

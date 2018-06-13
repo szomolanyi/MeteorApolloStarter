@@ -1,14 +1,7 @@
 import React, { Component } from 'react'
 import { Mutation } from "react-apollo"
-import gql from "graphql-tag"
 
-const createGreeting = gql`
-    mutation createGreeting($text: String!) {
-        createGreeting(text: $text) {
-            _id
-        }
-    }
-`
+import { getGreetings, createGreeting } from '/imports/queries'
 
 class NewGreetingForm extends Component {
   
@@ -16,15 +9,13 @@ class NewGreetingForm extends Component {
     error: null
   }
 
-  submitGreeting = () => {
+  submitGreeting = (e) => {
+    e.preventDefault()
     this.props.createGreeting({
       variables: {
         text: this.greeting.value
       }
     })
-      .then(()=>{
-        this.props.client.resetStore()
-      })
       .catch(error => {
         console.log(error)
         this.setState({ error: error.message })
@@ -34,15 +25,26 @@ class NewGreetingForm extends Component {
   render() {
     return (
       <div>
-        <input type="text" ref={input => (this.greeting = input)} />
-        <button onClick={this.submitGreeting}>Create</button>
+        <form onSubmit={this.submitGreeting}>
+          <input type="text" ref={input => (this.greeting = input)} />
+          <button type="submit">Create</button>
+        </form>
       </div>
     )
   }
 }
 
 const NewGreeting = ({client}) => (
-  <Mutation mutation={createGreeting}>
+  <Mutation 
+    mutation={createGreeting}
+    update={(cache, {data :{createGreeting} }) => {
+      const { greetings } = cache.readQuery({ query: getGreetings });
+      cache.writeQuery({
+        query: getGreetings,
+        data: { greetings: greetings.concat([createGreeting]) }
+      });
+    }}
+  >
     {(createGreeting, {data})=>(
       <NewGreetingForm createGreeting={createGreeting} client={client}/>
     )}

@@ -11,7 +11,7 @@ export default {
       const greetingId = Greetings.insert({
         text
       })
-      return Greetings.find({_id: greetingId})
+      return Greetings.findOne({ _id: greetingId })
     }
   }
 }
