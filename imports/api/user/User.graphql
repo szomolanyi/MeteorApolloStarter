@@ -1,8 +1,12 @@
-type User {
-  _id: String
-  email: String
+type Email {
+  address: String
+  verified: Boolean
 }
-
-extend type Query {
-    user: User
+type User {
+  emails: [Email]
+  randomString: String
+  _id: String
+}
+type Query {
+  user: User
 }

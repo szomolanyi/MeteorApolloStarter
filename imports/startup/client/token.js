@@ -1,13 +1,11 @@
-import { Accounts } from 'meteor/accounts-base'
+import { onTokenChange } from 'meteor-apollo-accounts'
 import Cookie from 'js-cookie'
 
-Accounts.onLogin(() => {
-  const token = Accounts._storedLoginToken()
-  const expires = Accounts._storedLoginTokenExpires()
 
-  console.log(`onLogin: token=${token}`)
+onTokenChange(({token, tokenExpires}) => {
+  console.log(`onTokenChange ${token} ${tokenExpires}`)
   if (token) {
-    const expireDate = new Date(expires)
+    const expireDate = new Date(tokenExpires)
     const today = new Date()
     const days = Math.floor((expireDate - today) / 1000 / 3600 / 24)
 
@@ -16,4 +14,3 @@ Accounts.onLogin(() => {
     Cookie.remove('loginToken')
   }
 })
-

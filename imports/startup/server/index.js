@@ -1,2 +1,2 @@
-import "./ssr"
-import "./register-api"
+import './ssr'
+import './register-api'

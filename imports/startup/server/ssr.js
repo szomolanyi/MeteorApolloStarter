@@ -1,21 +1,21 @@
-import React from "react"
-import { renderToString } from "react-dom/server"
-import { onPageLoad } from "meteor/server-render"
-import { StaticRouter } from "react-router"
+import React from 'react'
+import { renderToString } from 'react-dom/server'
+import { onPageLoad } from 'meteor/server-render'
+import { StaticRouter } from 'react-router'
 
-import { Helmet } from "react-helmet"
+import { Helmet } from 'react-helmet'
 
-import { ApolloProvider, getDataFromTree } from "react-apollo"
-import { ApolloClient } from "apollo-client"
-import { InMemoryCache } from "apollo-cache-inmemory"
-//import { createHttpLink } from "apollo-link-http"
-import { from } from "apollo-link"
+import { ApolloProvider, getDataFromTree } from 'react-apollo'
+import { ApolloClient } from 'apollo-client'
+import { InMemoryCache } from 'apollo-cache-inmemory'
+//import { createHttpLink } from 'apollo-link-http'
+import { from } from 'apollo-link'
 import { getUserForContext } from 'meteor/apollo'
 
 import schema from '../../api/schema'
 import {SchemaLink} from 'apollo-link-schema'
 
-import App from "../../ui/App"
+import App from '../../ui/App'
 
 onPageLoad(async sink => { 
 
@@ -29,6 +29,7 @@ onPageLoad(async sink => {
     link: from([
       new SchemaLink({ 
         schema, 
+        //executableSchema,
         context: { user, userId: user ? user._id : undefined },
       }),
       /* if Graphql is remote, access is possible through apollo-link-http

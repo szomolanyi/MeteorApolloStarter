@@ -1,3 +1,5 @@
+import { Random } from 'meteor/random'
+
 export default {
   Query: {
     user: (obj, args, context) => {
@@ -5,8 +7,9 @@ export default {
     }
   },
   User: {
-    email: (user) => {
-      return user.emails ? user.emails[0].address : null
-    }
+    emails: (user) => {
+      return user.emails
+    },
+    randomString: () => Random.id()
   }
 }

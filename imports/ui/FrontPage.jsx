@@ -6,7 +6,9 @@ const front_page_query = gql`
 query FrontPage  {
     user {
       _id
-      email
+      emails {
+        address
+      }
     }
   }
 `

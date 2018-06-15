@@ -1,15 +1,13 @@
-import { Meteor } from 'meteor/meteor'
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 
+import { logout } from 'meteor-apollo-accounts'
+
 import { withApollo } from 'react-apollo'
-import Cookie from 'js-cookie'
 
 const LogoutButton = ({ history, client }) => (
   <button onClick={() => {
-    Meteor.logout()
-    client.resetStore().then(() => {
-      Cookie.remove('loginToken')
+    logout(client).then(() => {
       history.push('/login')
     })
   }}>

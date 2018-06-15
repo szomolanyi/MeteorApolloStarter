@@ -1,26 +1,8 @@
 import React, { Component } from 'react'
-import { Accounts } from 'meteor/accounts-base'
 import {Redirect} from 'react-router-dom'
-import Cookie from 'js-cookie'
+import { loginWithPassword } from 'meteor-apollo-accounts'
 
 import { withApollo } from 'react-apollo'
-
-
-const setToken = () => {
-  const token = Accounts._storedLoginToken()
-  const expires = Accounts._storedLoginTokenExpires()
-
-  console.log(`onLogin: token=${token}`)
-  if (token) {
-    const expireDate = new Date(expires)
-    const today = new Date()
-    const days = Math.floor((expireDate - today) / 1000 / 3600 / 24)
-
-    Cookie.set('loginToken', token, { expires: days })
-  } else {
-    Cookie.remove('loginToken')
-  }
-}
 
 class LoginForm extends Component {
   state = {
@@ -29,19 +11,16 @@ class LoginForm extends Component {
 
   loginUser = (e) => {
     e.preventDefault()
-    Meteor.loginWithPassword(
-      this.email.value,
-      this.password.value,
-      ((error) => {
-        if (!error) {
-          this.props.client.resetStore().then(()=>{
-            setToken()
-            this.setState({ redirectToReferrer: true });
-          })
-        }
+    const {email, password} = this
+
+    loginWithPassword({ email: email.value, password: password.value }, this.props.client)
+      .then(response => {
+        this.props.client.resetStore()
+        this.setState({ redirectToReferrer: true })
+      }) 
+      .catch(error => {
         console.log(error)
-      })
-    )
+      }) 
   }
 
   render() {

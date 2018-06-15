@@ -6,6 +6,7 @@ import { onPageLoad } from 'meteor/server-render'
 import { ApolloProvider } from 'react-apollo'
 
 import client from './apolloclient'
+import './token'
 
 import App from '../../ui/App'
 

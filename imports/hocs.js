@@ -8,7 +8,9 @@ const user_query = gql`
 query user  {
     user {
       _id
-      email
+      emails {
+        address
+      }
     }
   }
 `

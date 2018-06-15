@@ -1,44 +1,38 @@
-import { makeExecutableSchema } from "graphql-tools"
-import merge from "lodash/merge"
+import { makeExecutableSchema } from 'graphql-tools'
+import merge from 'lodash/merge'
+
+import { loadSchema, getSchema } from 'graphql-loader'
+import { initAccounts } from 'meteor/nicolaslopezj:apollo-accounts'
+
 
 import User from './user/User.graphql'
-import DemoSchema from "./demo/Demo.graphql"
-import GreetingSchema from "./greetings/Greetings.graphql"
+import GreetingSchema from './greetings/Greetings.graphql'
 
-import UserResolvers from "./user/resolvers"
-import DemoResolvers from "./demo/resolvers"
-import GreetingResolvers from "./greetings/resolvers"
+import UserResolvers from './user/resolvers'
+import GreetingResolvers from './greetings/resolvers'
 
-//hilfe hiiiiiiiiii
+//User Query anf Mutations are considered as "base", all other schemas are extended
+const basicTypeDefs = User
 
-//only fake Query and Mutation, to allow real always extend
-const basicTypeDefs = `
-type Query {
-  Basic: String
-}
-type Mutation {
-  BasicM: String
-}
-`
 const typeDefs = [
   basicTypeDefs,
-  User,
-  DemoSchema,
-  GreetingSchema,
   //add schemas here
+  GreetingSchema,
 ]
-
 const resolvers = merge(
   UserResolvers,
-  DemoResolvers,
   GreetingResolvers,
-  //add resolvers here
 )
 
+const options = {}
+// Load all accounts related resolvers and type definitions into graphql-loader
+initAccounts(options)
+// Load all your resolvers and type definitions into graphql-loader
+loadSchema({ typeDefs, resolvers })
 
-const schema = makeExecutableSchema({
+const schema = makeExecutableSchema(getSchema({
   typeDefs,
-  resolvers
-})
+  resolvers,
+}))
 
 export default schema
