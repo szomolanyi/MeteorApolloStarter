@@ -17,7 +17,6 @@
     "babel-runtime": "^6.26.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
-    "graphiql": "^0.11.11",
     "graphql": "^0.13.2",
     "graphql-loader": "^1.2.1",
     "graphql-server-express": "^1.3.6",
