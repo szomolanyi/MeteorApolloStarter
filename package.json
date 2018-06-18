@@ -27,6 +27,7 @@
     "lodash": "^4.17.10",
     "meteor-apollo-accounts": "^2.0.3",
     "meteor-node-stubs": "^0.3.2",
+    "prop-types": "^15.6.1",
     "react": "^16.3.2",
     "react-apollo": "^2.1.4",
     "react-dom": "^16.3.2",
