@@ -1,26 +1,26 @@
 import React, { Component } from 'react'
 import { Accounts } from 'meteor/accounts-base'
-import { withApollo } from 'react-apollo';
+import { withApollo } from 'react-apollo'
+
+import { createUser } from 'meteor-apollo-accounts'
 
 class RegisterForm extends Component {
 
   registerUser = (e) => {
     e.preventDefault()
-    Accounts.createUser({
+    createUser({
       email: this.email.value,
-      password: this.password.value
-    },
-      (error => {
-        if (!error) {
-          this.props.client.resetStore().then(()=>{
-            this.props.history.push("/")
-          })
-        }
-        else {
-          console.log(error)
-        }
+      password: this.password.value,
+    }, this.props.client)
+    .then ((response) => {
+      console.log(`createUSer ${response}`)
+      this.props.client.resetStore().then(() => {
+        this.props.history.push("/")
       })
-    )
+    })
+    .catch((error) => {
+      console.log(error)
+    })
   }
 
   render() {

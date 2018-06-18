@@ -24,7 +24,12 @@ const resolvers = merge(
   GreetingResolvers,
 )
 
-const options = {}
+const options = {
+  loginWithFacebook: false,
+  loginWithGoogle: true,
+  loginWithLinkedIn: false,
+  loginWithPassword: true
+}
 // Load all accounts related resolvers and type definitions into graphql-loader
 initAccounts(options)
 // Load all your resolvers and type definitions into graphql-loader

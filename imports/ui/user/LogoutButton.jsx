@@ -8,7 +8,9 @@ import { withApollo } from 'react-apollo'
 const LogoutButton = ({ history, client }) => (
   <button onClick={() => {
     logout(client).then(() => {
-      history.push('/login')
+      client.resetStore().then(()=>{
+        history.push('/login')
+      })
     })
   }}>
     Logout
