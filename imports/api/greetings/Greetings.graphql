@@ -9,4 +9,6 @@ extend type Query {
 
 extend type Mutation {
   createGreeting(text: String!): Greeting
+  deleteGreeting(id: String!): Boolean
+  editGreeting(id: String!, text: String!): Greeting
 }

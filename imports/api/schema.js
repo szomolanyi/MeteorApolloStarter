@@ -11,6 +11,8 @@ import GreetingSchema from './greetings/Greetings.graphql'
 import UserResolvers from './user/resolvers'
 import GreetingResolvers from './greetings/resolvers'
 
+//reload me 12345678
+
 //User Query anf Mutations are considered as "base", all other schemas are extended
 const basicTypeDefs = User
 

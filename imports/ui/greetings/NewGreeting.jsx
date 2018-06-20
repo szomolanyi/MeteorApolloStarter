@@ -27,7 +27,7 @@ class NewGreetingForm extends Component {
       <div>
         <form onSubmit={this.submitGreeting}>
           <input type="text" ref={input => (this.greeting = input)} />
-          <button type="submit">Create</button>
+          <button type="submit">Send greeting</button>
         </form>
       </div>
     )
