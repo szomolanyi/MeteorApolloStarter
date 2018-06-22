@@ -30,6 +30,7 @@ export function withUser(Component) {
   }
 }
 
+
 export function withUserProtected(Component) {
   return function WithUserProtectedHOC(props) {
     return (
