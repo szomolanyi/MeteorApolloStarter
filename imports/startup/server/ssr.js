@@ -58,8 +58,9 @@ onPageLoad(async sink => {
   sink.renderIntoElementById('app', renderToString(<Main />))
 
   const helmet = Helmet.renderStatic()
-  sink.appendToHead(helmet.meta.toString())
   sink.appendToHead(helmet.title.toString())
+  sink.appendToHead(helmet.meta.toString())
+  sink.appendToHead(helmet.link.toString())
   sink.appendToBody(renderToString(
     <script dangerouslySetInnerHTML={{
       __html: `window.__APOLLO_STATE__ = ${JSON.stringify(state).replace(/</g, '\\u003c')};`,

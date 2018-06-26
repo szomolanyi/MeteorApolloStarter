@@ -16,6 +16,7 @@ const authLink = new ApolloLink((operation, forward) => {
   return forward(operation)
 })
   
+console.log(`graphql URL : ${Meteor.absoluteUrl("graphql")}`)
 const client = new ApolloClient({
   
   link: ApolloLink.from([

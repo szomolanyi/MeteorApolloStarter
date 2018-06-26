@@ -1,5 +1,5 @@
-import React from "react"
-import { Route } from "react-router-dom"
+import React from 'react'
+import { Route } from 'react-router-dom'
 
 import DefaultNav from '../components/nav/DefaultNav'
 
@@ -15,9 +15,10 @@ const style={
   width: "1024px"
 }
 
+
 const DefaultLayout = () => (
   <main style={mainStyle}>
-    <div style={style}>
+    <div style={style}> 
       <DefaultNav />
       <hr style={{ marginBottom: "50px" }} />
       {

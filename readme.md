@@ -21,5 +21,16 @@
 * https://github.com/orionsoft/meteor-apollo-accounts
 * https://github.com/janikvonrotz/meteor-apollo-accounts-example
 * https://github.com/anthonyjgrove/react-google-login
+* https://www.apollographql.com
+* https://github.com/CaptainN/meteor-react-starter
+* https://github.com/fede-rodes/meteor-apollo-starter-kit
+* https://github.com/jkrup/meteor-now
 
+## Deploy to zeit :
+### Install zeit and meteor-now
+* npm install -g now
+* npm install -g meteor-now
 
+### Deploy
+* meteor-now -e MONGO_URL=mongodb://<mongo_url> -e ROOT_URL=https://<root_url>
+* now alias https://<zeit_dynamic_url> https://<root_url>

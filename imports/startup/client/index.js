@@ -7,6 +7,7 @@ import { ApolloProvider } from 'react-apollo'
 
 import client from './apolloclient'
 import './token'
+import './service-worker'
 
 import App from '../../ui/App'
 
