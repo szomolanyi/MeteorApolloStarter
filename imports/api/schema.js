@@ -4,6 +4,7 @@ import merge from 'lodash/merge'
 import { loadSchema, getSchema } from 'graphql-loader'
 import { initAccounts } from 'meteor/nicolaslopezj:apollo-accounts'
 
+import { getUser } from 'meteor/apollo'
 
 import User from './user/User.graphql'
 import GreetingSchema from './greetings/Greetings.graphql'
@@ -40,6 +41,12 @@ loadSchema({ typeDefs, resolvers })
 const schema = makeExecutableSchema(getSchema({
   typeDefs,
   resolvers,
+  context: async ({ req }) => {
+    console.log('======= context ======')
+    console.log(req)
+    console.log('======= context ======')
+    return {user: await getUser(req.headers.authorization)}
+  }
 }))
 
 export default schema

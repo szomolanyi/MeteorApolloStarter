@@ -10,7 +10,7 @@ import { ApolloClient } from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 //import { createHttpLink } from 'apollo-link-http'
 import { from } from 'apollo-link'
-import { getUserForContext } from 'meteor/apollo'
+import { getUser } from 'meteor/apollo'
 
 import schema from '../../api/schema'
 import {SchemaLink} from 'apollo-link-schema'
@@ -20,10 +20,13 @@ import App from '../../ui/App'
 onPageLoad(async sink => { 
 
   const { loginToken } = sink.getCookies()
-  const { user } = await getUserForContext(loginToken)
-
-  console.log(`SSR: loginToken=${loginToken}`)
-
+  let user
+  if (loginToken) {
+    user = await getUser(loginToken)
+  }
+  else {
+    const user = undefined
+  }
   const client = new ApolloClient({
     ssrMode: true,
     link: from([
